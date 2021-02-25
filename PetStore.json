@@ -1,0 +1,369 @@
+{
+	"info": {
+		"_postman_id": "c9f7fcc1-9026-4089-89c3-192e5d8f0641",
+		"name": "PetStore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PETSTORE - Ajouter un client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Ticket Jira 263\r",
+							"//Cas passant\r",
+							"\r",
+							"//Verifier que le code statut est 200 \r",
+							"pm.test(\"Le  code statut est 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Verifier que le temps de réponse ne dépasse pas 600ms\r",
+							"pm.test(\"Le temps de réponse ne dépasse pas 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"firstName\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"phone\": \"{{phone}}\",\r\n  \"userStatus\": {{userStatus}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrlPetStore}}/user",
+					"host": [
+						"{{baseUrlPetStore}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PETSTORE - Afficher client (après un POST)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Ticket Jira 263\r",
+							"//Verification requête POST \"Ajouter un client\"\r",
+							"//Cas passant\r",
+							"\r",
+							"//Condition à executer dans le cas où le code statut est OK\r",
+							"if(pm.response.status === \"OK\") {\r",
+							"    //Verification que le code statut est 200\r",
+							"    pm.test(\"Le code statut est 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"\r",
+							"    //Verification que le temps de réponse ne dépasse pas 600ms\r",
+							"    pm.test(\"Le temps de réponse ne dépasse pas 600ms\", function () {\r",
+							"        pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"    });\r",
+							"\r",
+							"    //Vérification de la présence des éléments \r",
+							"    pm.test(\"Tous les éléments attendus sont présents\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"username\");\r",
+							"        pm.expect(pm.response.text()).to.include(\"firstName\");\r",
+							"        pm.expect(pm.response.text()).to.include(\"lastName\");\r",
+							"        pm.expect(pm.response.text()).to.include(\"email\");\r",
+							"        pm.expect(pm.response.text()).to.include(\"password\");\r",
+							"        pm.expect(pm.response.text()).to.include(\"phone\");\r",
+							"        pm.expect(pm.response.text()).to.include(\"userStatus\");\r",
+							"    });\r",
+							"\r",
+							"    //Vérifier si la variable globale \"username\" équivaut au username obtenu dans la réponse\r",
+							"    pm.test(\"Le username obtenu correspond au username\", function () {\r",
+							"        Username = pm.globals.get(\"username\")\r",
+							"        var bodyData = pm.response.json();\r",
+							"        pm.expect(bodyData.username).to.eql(Username);\r",
+							"    });\r",
+							"\r",
+							"}else{\r",
+							"    \r",
+							"    pm.test(\"Le code statut est 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrlPetStore}}/user/{{username}}",
+					"host": [
+						"{{baseUrlPetStore}}"
+					],
+					"path": [
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PETSTORE - Modifier les données d'un client",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//modifier la variable globale \"username\"\r",
+							"pm.globals.set(\"username\",\"Salameche\")"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Ticket Jira 263\r",
+							"//Cas passant\r",
+							"\r",
+							"//Verifier que le code statut est 200\r",
+							"pm.test(\"Le code statut est 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//Vérifier que le temps de réponse ne dépasse 600ms\r",
+							"pm.test(\"Le temps de réponse ne dépasse pas 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"firstName\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"phone\": \"{{phone}}\",\r\n  \"userStatus\": {{userStatus}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrlPetStore}}/user/{{username}}",
+					"host": [
+						"{{baseUrlPetStore}}"
+					],
+					"path": [
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PETSTORE - Afficher client (avec la modification PUT)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Ticket Jira 263\r",
+							"//requête GET pour vérifier la requête PUT \"Modifier client\"\r",
+							"//Cas Passant\r",
+							"\r",
+							"//Vérifier le si le code statut est 200\r",
+							"pm.test(\"Le code statut est 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Vérifier que le temps de réponse est de moins de 600ms\r",
+							"pm.test(\"Le temps de réponse ne dépasse pas 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});\r",
+							"\r",
+							"//Vérifier que le username a bien été changé suite à une requête PUT. En comparant le username obtenu dans la réponse et la variable globale \"username\"\r",
+							"pm.test(\"Le username obtenu est le username modifié\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    userName = pm.globals.get(\"username\")\r",
+							"    pm.expect(jsonData.username).to.eql(userName);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrlPetStore}}/user/{{username}}",
+					"host": [
+						"{{baseUrlPetStore}}"
+					],
+					"path": [
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PETSTORE - Supprimer un client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//TICKET Jira 263\r",
+							"//Cas Passant\r",
+							"\r",
+							"//Vérifier que le code statut est de 200\r",
+							"pm.test(\"Le code statut est 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Vérifier que le temps de réponse est de moins de 600ms\r",
+							"pm.test(\"Le temps de réponse ne dépasse pas 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});\r",
+							"\r",
+							"//Vérifier que le message suite à une suppression contient bien le username supprimé\r",
+							"pm.test(\"La confirmation de suppression contient le username\", function () {\r",
+							"    Username = pm.globals.get(\"username\")\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(Username);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrlPetStore}}/user/{{username}}",
+					"host": [
+						"{{baseUrlPetStore}}"
+					],
+					"path": [
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PETSTORE - Afficher client (après DELETE)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//TICKET Jira 263\r",
+							"//Cas Passant\r",
+							"//Requête GET pour vérifier une requête DELETE\r",
+							"\r",
+							"//Condition dans le cas où le code statut est 404 (code logique car le client ne doit pas être trouvé)\r",
+							"if(pm.response.status === \"Not Found\"){    \r",
+							"    //Vérifier que le code statut est bien 404\r",
+							"    pm.test(\"Le code statut est 404\", function () {\r",
+							"        pm.response.to.have.status(404);\r",
+							"    });\r",
+							"\r",
+							"    //Vérifier que le temps de réponse est de moins de 600ms\r",
+							"    pm.test(\"Le temps de réponsene dépasse pas 600ms\", function () {\r",
+							"        pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"    });\r",
+							"\r",
+							"    //Vérifier que le message dans la réponse indique bien une erreur\"\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.test(jsonData.type+\" | \"+jsonData.message, function () {\r",
+							"        pm.expect(jsonData.type).to.eql(\"error\");\r",
+							"    });\r",
+							"\r",
+							"//condition dans le cas où le code statut de la requête n'est pas 404\r",
+							"}else{\r",
+							"    pm.test(\"Le code statut n'est pas 404\", function () {\r",
+							"        pm.response.to.have.status(404)\r",
+							"});\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrlPetStore}}/user/{{username}}",
+					"host": [
+						"{{baseUrlPetStore}}"
+					],
+					"path": [
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

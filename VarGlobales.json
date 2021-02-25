@@ -1,0 +1,84 @@
+{
+	"id": "146e52f0-fd32-4814-8e58-8a3c0f4d5eb7",
+	"values": [
+		{
+			"key": "limit",
+			"value": "200",
+			"enabled": true
+		},
+		{
+			"key": "page",
+			"value": "1",
+			"enabled": true
+		},
+		{
+			"key": "offset",
+			"value": "0",
+			"enabled": true
+		},
+		{
+			"key": "sort",
+			"value": "asc",
+			"enabled": true
+		},
+		{
+			"key": "country",
+			"value": "FR",
+			"enabled": true
+		},
+		{
+			"key": "order_by",
+			"value": "country",
+			"enabled": true
+		},
+		{
+			"key": "countryName",
+			"value": "France",
+			"enabled": true
+		},
+		{
+			"key": "city",
+			"value": "Paris",
+			"enabled": true
+		},
+		{
+			"key": "username",
+			"value": "Pikachu",
+			"enabled": true
+		},
+		{
+			"key": "firstName",
+			"value": "Pierre",
+			"enabled": true
+		},
+		{
+			"key": "lastName",
+			"value": "Kachurian",
+			"enabled": true
+		},
+		{
+			"key": "email",
+			"value": "pikachun@mail.com",
+			"enabled": true
+		},
+		{
+			"key": "password",
+			"value": "password456",
+			"enabled": true
+		},
+		{
+			"key": "phone",
+			"value": "0000000000",
+			"enabled": true
+		},
+		{
+			"key": "userStatus",
+			"value": "0",
+			"enabled": true
+		}
+	],
+	"name": "My Workspace Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2021-02-24T08:11:34.898Z",
+	"_postman_exported_using": "Postman/8.0.6"
+}
